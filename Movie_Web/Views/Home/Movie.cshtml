@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Movie_Web.Models.Movie>
+
+@{
+    ViewBag.Title = "Movies";
+}
+<div class="container">
+    <div class="row justify-content-center">
+         @foreach (var r in Model)
+                {
+                    <div class="col-4 card m-4 align-self-end" style="width: 18rem; height:25rem">
+
+                        <img src="" class="card-img-top img-fluid" alt="">
+                        <div class="card-body">
+                                <h5 class="card-title" style="height:3rem;">@r.Title</h5>
+                                <h6 class="card-title">Type - @r.Type</h6>
+                                <h6 class="card-title" style="height:3rem;">Director - @r.Director</h6>
+                                <p class="card-text" style="height:9rem;">@r.Description</p>
+                                <a href="./MovieDetail/@r.Id" class="btn btn-primary">Description</a>
+                        </div>
+                
+                    </div>
+                }
+    </div>
+</div>
+

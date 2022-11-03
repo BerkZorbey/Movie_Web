@@ -1,0 +1,23 @@
+﻿@model Movie
+@{
+    ViewBag.Title = "Movie Detail";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-10 offset-2">
+           
+           <h2>@Model.Title</h2>
+           <h5>@Model.Director</h5>
+           <h6>@Model.Type</h6>
+           <h6>@Model.Duration</h6>
+           <h6>@Model.Rating</h6>
+           <img src="" class="img-fluid" alt="">
+           <p>@Model.Description</p>
+           <p>Cast - @Model.Cast</p>
+           <h6>@Model.Country</h6>
+           <p>@Model.Release_Year</p>
+           <p>Listed_In - @Model.Listed_In</p>
+  
+        </div>
+    </div>
+</div>

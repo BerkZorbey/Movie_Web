@@ -1,8 +1,7 @@
 ﻿namespace Movie_Web.Models
 {
-    public class Movie
+    public class Movie : BaseEntity
     {
-        public string Id { get; set; }
         public string? Type { get; set; }
         public string? Title { get; set; }
         public string? Director { get; set; }
