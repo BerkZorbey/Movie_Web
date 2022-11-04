@@ -35,6 +35,16 @@ namespace Movie_Web.Controllers
             var movie = await _clientService.GetMovieByIdFromAPIAsync(Uri);
             return View(movie);
         }
+        
+        public IActionResult AddMovie() => View();
+        [HttpPost]
+        public async Task<IActionResult> AddMovieAsync(Movie addMovie)
+        {
+            
+            string Uri = Path.Combine(HostUri + "/api/Movie");
+            var movie = await _clientService.PostMovieToAPIAsync(Uri,addMovie);
+            return View(movie);
+        }
         public IActionResult Privacy()
         {
             return View();

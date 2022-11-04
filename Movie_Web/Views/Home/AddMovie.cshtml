@@ -1,0 +1,54 @@
+﻿@model Movie
+@{ Layout = "_Layout"; ViewBag.Title = "Add a Movie";}
+ 
+<h2>Add a Movie</h2>
+<form asp-action="AddMovie" method="post">
+    <div class="form-group">
+        <label for="Type">Type:</label>
+        <input class="form-control" name="Type" />
+    </div>
+    <div class="form-group">
+        <label for="Title">Title:</label>
+        <input class="form-control" name="Title" />
+    </div>
+    <div class="form-group">
+        <label for="Director">Director:</label>
+        <input class="form-control" name="Director" />
+    </div>
+    <div class="form-group">
+        <label for="Cast">Cast:</label>
+        <input class="form-control" name="Cast" />
+    </div>
+    <div class="form-group">
+        <label for="Country">Country:</label>
+        <input class="form-control" name="Country" />
+    </div>
+    <div class="form-group">
+        <label for="Date_Added">Date Added:</label>
+        <input class="form-control" name="Date_Added" />
+    </div>
+    <div class="form-group">
+        <label for="Release_Year">Release Year:</label>
+        <input class="form-control" name="Release_Year" />
+    </div>
+    <div class="form-group">
+        <label for="Rating">Rating:</label>
+        <input class="form-control" name="Rating" />
+    </div>
+    <div class="form-group">
+        <label for="Duration">Duration:</label>
+        <input class="form-control" name="Duration" />
+    </div>
+    <div class="form-group">
+        <label for="Listed_In">Listed_In:</label>
+        <input class="form-control" name="Listed_In" />
+    </div>
+    <div class="form-group">
+        <label for="Description">Description:</label>
+        <textarea class="form-control" name="Description" cols="20" rows="20" draggable="false">
+        </textarea>
+    </div>
+    <div class="text-center panel-body">
+        <button type="submit" class="btn btn-sm btn-primary">Add</button>
+    </div>
+</form>

@@ -6,5 +6,6 @@ namespace Movie_Web.Services
     {
        public Task<List<TEntity>> GetMoviesFromAPIAsync(string Uri);
        public Task<TEntity> GetMovieByIdFromAPIAsync(string Uri);
+       public Task<TEntity> PostMovieToAPIAsync(string Uri, TEntity addMovie);
     }
 }
