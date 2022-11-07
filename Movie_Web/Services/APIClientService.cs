@@ -38,5 +38,27 @@ namespace Movie_Web.Services
                 return JsonConvert.DeserializeObject<TEntity>(apiResponse);
             }
         }
+        public async Task<TEntity> UpdateMovieToAPIAsync(string Uri, TEntity updateMovie)
+        {
+            var JsonMovie = JsonConvert.SerializeObject(updateMovie);
+            StringContent stringContent = new StringContent(JsonMovie, Encoding.UTF8, "application/json");
+
+            using (var response = await _httpClient.PutAsync(Uri, stringContent))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<TEntity>(apiResponse);
+            }
+        }
+        public async Task<TEntity> UpdateMovieDurationToAPIAsync(string Uri, TEntity updateMovieDuration)
+        {
+            var JsonMovie = JsonConvert.SerializeObject(updateMovieDuration);
+            StringContent stringContent = new StringContent(JsonMovie, Encoding.UTF8, "application/json");
+
+            using (var response = await _httpClient.PatchAsync(Uri, stringContent))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<TEntity>(apiResponse);
+            }
+        }
     }
 }

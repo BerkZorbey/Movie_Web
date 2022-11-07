@@ -15,7 +15,8 @@
                                 <h6 class="card-title">Type - @r.Type</h6>
                                 <h6 class="card-title" style="height:3rem;">Director - @r.Director</h6>
                                 <p class="card-text" style="height:9rem;">@r.Description</p>
-                                <a href="./MovieDetail/@r.Id" class="btn btn-primary">Description</a>
+                                <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="MovieDetail" asp-route-id="@r.Id">Description</a>
+                                <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="UpdateMovie" asp-route-id="@r.Id">Update</a>
                         </div>
                 
                     </div>

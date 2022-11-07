@@ -1,0 +1,60 @@
+﻿@model Movie
+@{
+    Layout = "_Layout"; ViewBag.Title = "Update a Movie";
+}
+
+<h2>Update a Movie</h2>
+<form asp-action="UpdateMovie" method="post" asp-route-id="@Model.Id">
+    <div class="form-group" hidden>
+        <label for="ID">ID:</label>
+        <input class="form-control" name="ID" value="@Model.Id" />
+    </div>
+    <div class="form-group">
+        <label for="Type">Type:</label>
+        <input class="form-control" name="Type" value="@Model.Type" />
+    </div>
+    <div class="form-group">
+        <label for="Title">Title:</label>
+        <input class="form-control" name="Title" value="@Model.Title" />
+    </div>
+    <div class="form-group">
+        <label for="Director">Director:</label>
+        <input class="form-control" name="Director" value="@Model.Director" />
+    </div>
+    <div class="form-group">
+        <label for="Cast">Cast:</label>
+        <input class="form-control" name="Cast" value="@Model.Cast" />
+    </div>
+    <div class="form-group">
+        <label for="Country">Country:</label>
+        <input class="form-control" name="Country" value="@Model.Country" />
+    </div>
+    <div class="form-group">
+        <label for="Date_Added">Date Added:</label>
+        <input class="form-control" name="Date_Added" value="@Model.Date_Added" />
+    </div>
+    <div class="form-group">
+        <label for="Release_Year">Release Year:</label>
+        <input class="form-control" name="Release_Year" value="@Model.Release_Year" />
+    </div>
+    <div class="form-group">
+        <label for="Rating">Rating:</label>
+        <input class="form-control" name="Rating" value="@Model.Rating" />
+    </div>
+    <div class="form-group">
+        <label for="Duration">Duration:</label>
+        <input class="form-control" name="Duration" value="@Model.Duration" />
+    </div>
+    <div class="form-group">
+        <label for="Listed_In">Listed_In:</label>
+        <input class="form-control" name="Listed_In" value="@Model.Listed_In" />
+    </div>
+    <div class="form-group">
+        <label for="Description">Description:</label>
+        <textarea class="form-control" name="Description" cols="20" rows="20" draggable="false" value="@Model.Description">
+        </textarea>
+    </div>
+    <div class="text-center panel-body">
+        <button type="submit" class="btn btn-sm btn-primary">Update</button>
+    </div>
+</form>
