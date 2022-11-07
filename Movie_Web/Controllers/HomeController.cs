@@ -78,6 +78,13 @@ namespace Movie_Web.Controllers
             var movie = await _clientService.UpdateMovieDurationToAPIAsync(Uri, movieModel);
             return RedirectToAction("Movie");
         }
+        [HttpPost]
+        public async Task<IActionResult> DeleteMovieAsync(string id)
+        {
+            string Uri = Path.Combine(HostUri + "/api/Movie/" + id);
+            var movie = await _clientService.DeleteMovieAsync(Uri);
+            return RedirectToAction("Movie");
+        }
         public IActionResult Privacy()
         {
             return View();
