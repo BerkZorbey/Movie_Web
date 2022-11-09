@@ -18,7 +18,7 @@
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                                     <a class="btn btn-sm btn-outline-primary me-3" asp-area="" asp-controller="Home" asp-action="MovieDetail" asp-route-id="@r.Id">Description</a>
                                     <a class="btn btn-sm btn-outline-primary me-3" asp-area="" asp-controller="Home" asp-action="UpdateMovie" asp-route-id="@r.Id">Update</a>
-                                    <form asp-action="DeleteMovie" asp-route-id="@r.Id" method="post">
+                                    <form asp-action="DeleteMovie" asp-route-currentpage="@Model.Paging.CurrentPage" asp-route-id="@r.Id" method="post">
                                         <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                                     </form>
                                 </div>
@@ -41,12 +41,23 @@
                      <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@(Model.Paging.NextPage + 1)">@(Model.Paging.NextPage + 1)</a></li>
                     <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.NextPage">Next</a></li>
                 }
-                else{
-                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.PreviousPage">Previous</a></li>           
-                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.PreviousPage">@Model.Paging.PreviousPage</a></li>
-                    <li class="page-item active"><a class="page-link" href="#">@Model.Paging.CurrentPage</a></li>
-                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.NextPage">@Model.Paging.NextPage</a></li>
-                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.NextPage">Next</a></li>
+                else
+                {
+                    if(Model.Paging.CurrentPage == Model.Paging.TotalPages){
+                        <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.PreviousPage">Previous</a></li>
+                        <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.PreviousPage">@Model.Paging.PreviousPage</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">@Model.Paging.CurrentPage</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#" aria-disabled="true">Next</a></li>
+
+                    }
+                    else{
+                        <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.PreviousPage">Previous</a></li>           
+                        <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.PreviousPage">@Model.Paging.PreviousPage</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">@Model.Paging.CurrentPage</a></li>
+                        <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.NextPage">@Model.Paging.NextPage</a></li>
+                        <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.NextPage">Next</a></li>
+                    }
+
                 }
             </ul>
         </nav>
