@@ -25,13 +25,19 @@ namespace Movie_Web.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> MovieAsync()
+        public async Task<IActionResult> MovieAsync(int currentPage = 1)
         {
-            List<Movie> movies = new();
-            string Uri = Path.Combine(HostUri + "/api/Movie?Page=1&PageSize=10&Sort=Title&SortingDirection=1");
-            movies = await _clientService.GetMoviesFromAPIAsync(Uri);
-
-            return View(movies);
+            
+            string Uri = Path.Combine(HostUri + "/api/Movie?Page="+currentPage+"&PageSize=30&Sort=Title&SortingDirection=1");
+            var response = await _clientService.GetResponseFromAPIAsync(Uri);
+            var movieList = await _clientService.GetMoviesAsync(response["data"]);
+            var paging = await _clientService.GetPagingAsync(response["paging"]);
+          
+            return View(new MoviePaging()
+            {
+                Movie = movieList,
+                Paging = paging
+            });
         }
         public async Task<IActionResult> MovieDetailAsync(string id)
         {

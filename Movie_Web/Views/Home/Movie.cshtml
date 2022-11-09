@@ -1,30 +1,55 @@
-﻿@model IEnumerable<Movie_Web.Models.Movie>
+﻿@model MoviePaging
 
 @{
     ViewBag.Title = "Movies";
 }
 <div class="container">
     <div class="row justify-content-center">
-         @foreach (var r in Model)
+         @foreach (var r in Model.Movie.AsEnumerable())
                 {
                     <div class="col-4 card m-4 align-self-end" style="width: 18rem; height:25rem">
-
+                        
                         <img src="" class="card-img-top img-fluid" alt="">
-                        <div class="card-body">
-                                <h5 class="card-title" style="height:3rem;">@r.Title</h5>
+                        <div class="card-body ">
+                                <h5 class="card-title" style="height:4.5rem;">@r.Title</h5>
                                 <h6 class="card-title">Type - @r.Type</h6>
-                                <h6 class="card-title" style="height:3rem;">Director - @r.Director</h6>
+                                <h6 class="card-title" style="height:3.5rem;">Director - @r.Director</h6>
                                 <p class="card-text" style="height:9rem;">@r.Description</p>
-                                <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="MovieDetail" asp-route-id="@r.Id">Description</a>
-                                <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="UpdateMovie" asp-route-id="@r.Id">Update</a>
-                                <form asp-action="DeleteMovie" asp-route-id="@r.Id" method="post">
-                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                </form>
+                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                    <a class="btn btn-sm btn-outline-primary me-3" asp-area="" asp-controller="Home" asp-action="MovieDetail" asp-route-id="@r.Id">Description</a>
+                                    <a class="btn btn-sm btn-outline-primary me-3" asp-area="" asp-controller="Home" asp-action="UpdateMovie" asp-route-id="@r.Id">Update</a>
+                                    <form asp-action="DeleteMovie" asp-route-id="@r.Id" method="post">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    </form>
+                                </div>
+                               
                                 
                         </div>
                 
                     </div>
                 }
+                 
+         
+    </div>
+    <div class="row justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                @if(Model.Paging.CurrentPage <2){
+                    <li class="page-item disabled"><a class="page-link" href="#" aria-disabled="true">Previous</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">@Model.Paging.CurrentPage</a></li>
+                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.NextPage">@Model.Paging.NextPage</a></li>
+                     <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@(Model.Paging.NextPage + 1)">@(Model.Paging.NextPage + 1)</a></li>
+                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.NextPage">Next</a></li>
+                }
+                else{
+                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.PreviousPage">Previous</a></li>           
+                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.PreviousPage">@Model.Paging.PreviousPage</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">@Model.Paging.CurrentPage</a></li>
+                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.NextPage">@Model.Paging.NextPage</a></li>
+                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Movie" asp-route-currentpage="@Model.Paging.NextPage">Next</a></li>
+                }
+            </ul>
+        </nav>
     </div>
 </div>
 

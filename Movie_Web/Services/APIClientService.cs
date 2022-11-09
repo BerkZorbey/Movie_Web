@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json.Nodes;
 
 namespace Movie_Web.Services
 {
@@ -12,13 +13,22 @@ namespace Movie_Web.Services
         {
             _httpClient = new HttpClient();
         }
-        public async Task<List<TEntity>> GetMoviesFromAPIAsync(string Uri)
+        
+        public async Task<JsonNode> GetResponseFromAPIAsync(string Uri)
         {
             using (var response = await _httpClient.GetAsync(Uri))
             {
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<List<TEntity>>(apiResponse);
+                var apiResponse = JsonObject.Parse(response.Content.ReadAsStringAsync().Result);
+                return apiResponse;
             } 
+        }
+        public async Task<List<TEntity>> GetMoviesAsync(JsonNode apiResponse)
+        {
+            return JsonConvert.DeserializeObject<List<TEntity>>(apiResponse.ToString());
+        }
+        public async Task<PagingModel> GetPagingAsync(JsonNode apiResponse)
+        {
+            return JsonConvert.DeserializeObject<PagingModel>(apiResponse.ToString());
         }
         public async Task<TEntity> GetMovieByIdFromAPIAsync(string Uri)
         {
