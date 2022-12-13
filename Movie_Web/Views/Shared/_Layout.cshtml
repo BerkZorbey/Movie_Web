@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,12 +26,36 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Movie">Movies</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AddMovie">AddMovies</a>
-                        </li>
+                        @if(ViewBag.Token != null){
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AddMovie">AddMovies</a>
+                            </li>
+                       }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        
+                    </ul>
+                    <ul class="d-flex navbar-nav me-4">
+                        @if(ViewBag.Token != null)
+                       {
+                            <li class="nav-item me-4">
+                                <h5 class="nav-link text-dark" >@ViewBag.UserName</h5>
+                            </li>
+                            <li class="nav-item me-4">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+                            </li>
+                        }
+                        else{
+                            <li class="nav-item me-4">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Register">Register</a>
+                            </li>
+                        
+
+                        }
                     </ul>
                 </div>
             </div>

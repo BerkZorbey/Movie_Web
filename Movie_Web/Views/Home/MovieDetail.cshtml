@@ -9,7 +9,11 @@
            <h2>@Model.Title</h2>
            <h5>@Model.Director</h5>
            <h6>@Model.Type</h6>
-                <h6>@Model.Duration <a class="btn btn-sm btn-primary" asp-area="" asp-controller="Home" asp-action="UpdateMovieDuration" asp-route-id="@Model.Id">Edit</a></h6>
+           <h6>@Model.Duration 
+               @if(ViewBag.Token != null){ 
+                    <a class="btn btn-sm btn-primary" asp-area="" asp-controller="Home" asp-action="UpdateMovieDuration" asp-route-id="@Model.Id">Edit</a>
+               } 
+           </h6>
            <h6>@Model.Rating</h6>
            <img src="" class="img-fluid" alt="">
            <p>@Model.Description</p>

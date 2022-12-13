@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Movies";
+    
 }
 <div class="container">
     <div class="row justify-content-center">
@@ -17,13 +18,14 @@
                                 <p class="card-text" style="height:9rem;">@r.Description</p>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                                     <a class="btn btn-sm btn-outline-primary me-3" asp-area="" asp-controller="Home" asp-action="MovieDetail" asp-route-id="@r.Id">Description</a>
-                                    <a class="btn btn-sm btn-outline-primary me-3" asp-area="" asp-controller="Home" asp-action="UpdateMovie" asp-route-id="@r.Id">Update</a>
-                                    <form asp-action="DeleteMovie" asp-route-currentpage="@Model.Paging.CurrentPage" asp-route-id="@r.Id" method="post">
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                                    </form>
+                                    @if (ViewBag.Token != null)
+                                    {
+                                        <a class="btn btn-sm btn-outline-primary me-3" asp-area="" asp-controller="Home" asp-action="UpdateMovie" asp-route-id="@r.Id">Update</a>
+                                        <form asp-action="DeleteMovie" asp-route-currentpage="@Model.Paging.CurrentPage" asp-route-id="@r.Id" method="post">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                        </form>
+                                    }
                                 </div>
-                               
-                                
                         </div>
                 
                     </div>
