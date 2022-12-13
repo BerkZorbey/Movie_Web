@@ -5,13 +5,14 @@ namespace Movie_Web.Services
 {
     public interface IAPIClientService<TEntity> where TEntity : BaseEntity 
     {
+       void AddHeaderToken(string token);
        Task<JsonNode> GetResponseFromAPIAsync(string Uri);
-       Task<List<TEntity>> GetMoviesAsync(JsonNode apiResponse);
-       Task<PagingModel> GetPagingAsync(JsonNode apiResponse);
-       Task<TEntity> GetMovieByIdFromAPIAsync(string Uri);
-       Task<TEntity> PostMovieToAPIAsync(string Uri, TEntity addMovie);
-       Task<TEntity> UpdateMovieToAPIAsync(string Uri, TEntity addMovie);
-       Task<TEntity> UpdateMovieDurationToAPIAsync(string Uri, TEntity updateMovieDuration);
-       Task<TEntity> DeleteMovieAsync(string Uri);
+       Task<List<TEntity>> GetModelAsync(JsonNode apiResponse);
+       Task<TEntity> GetModelByIdFromAPIAsync(string Uri);
+       Task<TEntity> PostModelToAPIAsync(string Uri, TEntity addModel);
+       Task<TEntity> UpdateModelToAPIAsync(string Uri, TEntity updateModel);
+       Task<TEntity> UpdateModelPartAPIAsync(string Uri, TEntity updateModelPart);
+       Task<TEntity> DeleteModelAsync(string Uri);
+       Task<PagingModel> GetPagingFromMovieApiAsync(JsonNode apiResponse);
     }
 }

@@ -1,36 +1,31 @@
 ﻿using Movie_Web.Models;
+using Movie_Web.Models.Value_Object;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json.Nodes;
+using System.Web.Providers.Entities;
 
 namespace Movie_Web.Services
 {
     public class APIClientService<TEntity> : IAPIClientService<TEntity> where TEntity : BaseEntity
     {
         private readonly HttpClient _httpClient;
+        
         public APIClientService()
         {
             _httpClient = new HttpClient();
+            
         }
-        
-        public async Task<JsonNode> GetResponseFromAPIAsync(string Uri)
+        public void AddHeaderToken(string token)
         {
-            using (var response = await _httpClient.GetAsync(Uri))
-            {
-                var apiResponse = JsonObject.Parse(response.Content.ReadAsStringAsync().Result);
-                return apiResponse;
-            } 
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
         }
-        public async Task<List<TEntity>> GetMoviesAsync(JsonNode apiResponse)
+        public Task<List<TEntity>> GetModelAsync(JsonNode apiResponse)
         {
-            return JsonConvert.DeserializeObject<List<TEntity>>(apiResponse.ToString());
+            return Task.FromResult(JsonConvert.DeserializeObject<List<TEntity>>(apiResponse.ToString()));
         }
-        public async Task<PagingModel> GetPagingAsync(JsonNode apiResponse)
-        {
-            return JsonConvert.DeserializeObject<PagingModel>(apiResponse.ToString());
-        }
-        public async Task<TEntity> GetMovieByIdFromAPIAsync(string Uri)
+        public async Task<TEntity> GetModelByIdFromAPIAsync(string Uri)
         {
             using (var response = await _httpClient.GetAsync(Uri))
             {
@@ -38,9 +33,9 @@ namespace Movie_Web.Services
                 return JsonConvert.DeserializeObject<TEntity>(apiResponse);
             }
         }
-        public async Task<TEntity> PostMovieToAPIAsync(string Uri,TEntity addMovie)
+        public async Task<TEntity> PostModelToAPIAsync(string Uri,TEntity addModel)
         {
-            var JsonMovie = JsonConvert.SerializeObject(addMovie);
+            var JsonMovie = JsonConvert.SerializeObject(addModel);
             StringContent stringContent = new StringContent(JsonMovie, Encoding.UTF8, "application/json");
             
             using (var response = await _httpClient.PostAsync(Uri,stringContent))
@@ -49,20 +44,20 @@ namespace Movie_Web.Services
                 return JsonConvert.DeserializeObject<TEntity>(apiResponse);
             }
         }
-        public async Task<TEntity> UpdateMovieToAPIAsync(string Uri, TEntity updateMovie)
+        public async Task<TEntity> UpdateModelToAPIAsync(string Uri, TEntity updateModel)
         {
-            var JsonMovie = JsonConvert.SerializeObject(updateMovie);
+            var JsonMovie = JsonConvert.SerializeObject(updateModel);
             StringContent stringContent = new StringContent(JsonMovie, Encoding.UTF8, "application/json");
-
+            
             using (var response = await _httpClient.PutAsync(Uri, stringContent))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<TEntity>(apiResponse);
             }
         }
-        public async Task<TEntity> UpdateMovieDurationToAPIAsync(string Uri, TEntity updateMovieDuration)
+        public async Task<TEntity> UpdateModelPartAPIAsync(string Uri, TEntity updateModelPart)
         {
-            var JsonMovie = JsonConvert.SerializeObject(updateMovieDuration);
+            var JsonMovie = JsonConvert.SerializeObject(updateModelPart);
             StringContent stringContent = new StringContent(JsonMovie, Encoding.UTF8, "application/json");
 
             using (var response = await _httpClient.PatchAsync(Uri, stringContent))
@@ -71,7 +66,7 @@ namespace Movie_Web.Services
                 return JsonConvert.DeserializeObject<TEntity>(apiResponse);
             }
         }
-        public async Task<TEntity> DeleteMovieAsync(string Uri)
+        public async Task<TEntity> DeleteModelAsync(string Uri)
         {
             using (var response = await _httpClient.DeleteAsync(Uri))
             {
@@ -79,5 +74,18 @@ namespace Movie_Web.Services
                 return JsonConvert.DeserializeObject<TEntity>(apiResponse);
             }
         }
+        public async Task<JsonNode> GetResponseFromAPIAsync(string Uri)
+        {
+            using (var response = await _httpClient.GetAsync(Uri))
+            {
+                var apiResponse = JsonObject.Parse(response.Content.ReadAsStringAsync().Result);
+                return apiResponse;
+            } 
+        }
+        public Task<PagingModel> GetPagingFromMovieApiAsync(JsonNode apiResponse)
+        {
+            return Task.FromResult(JsonConvert.DeserializeObject<PagingModel>(apiResponse.ToString()));
+        }
+       
     }
 }
