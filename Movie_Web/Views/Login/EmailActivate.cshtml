@@ -1,0 +1,40 @@
+﻿@model User
+
+
+
+@if(Model.isActivatedEmail == true){
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <main class="px-3">
+            <h1>Succesfully Email is activated</h1>
+            <p class="lead">You will now be redirected in <span id="time"></span> seconds</p>
+            
+        </main>
+    </div>
+}
+else{
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <main class="px-3">
+            <h1>Warning! Email is activated</h1>
+            <p class="lead">
+                <form asp-action="EmailActivate" asp-controller="Login" method="post">
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.Email)
+                    <button type="submit" class="btn btn-sm">Send Activation Email.</button>
+                </form>
+            </p>
+        </main>
+    </div>
+}
+
+<script>
+    var i=5;
+    var timer = setInterval(function(){
+            document.getElementById("time").innerHTML = i;
+            if(i==0){
+                clearInterval(timer);
+                window.location.href = 'https://localhost:7060';
+            }
+            i--;
+    },1000);
+     
+</script>

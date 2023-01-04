@@ -1,21 +1,18 @@
 ﻿using Movie_Web.Models;
-using Movie_Web.Models.Value_Object;
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json.Nodes;
-using System.Web.Providers.Entities;
 
 namespace Movie_Web.Services
 {
     public class APIClientService<TEntity> : IAPIClientService<TEntity> where TEntity : BaseEntity
     {
         private readonly HttpClient _httpClient;
-        
+
         public APIClientService()
         {
             _httpClient = new HttpClient();
-            
+
         }
         public void AddHeaderToken(string token)
         {
@@ -33,12 +30,12 @@ namespace Movie_Web.Services
                 return JsonConvert.DeserializeObject<TEntity>(apiResponse);
             }
         }
-        public async Task<TEntity> PostModelToAPIAsync(string Uri,TEntity addModel)
+        public async Task<TEntity> PostModelToAPIAsync(string Uri, TEntity addModel)
         {
             var JsonMovie = JsonConvert.SerializeObject(addModel);
             StringContent stringContent = new StringContent(JsonMovie, Encoding.UTF8, "application/json");
-            
-            using (var response = await _httpClient.PostAsync(Uri,stringContent))
+
+            using (var response = await _httpClient.PostAsync(Uri, stringContent))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<TEntity>(apiResponse);
@@ -48,7 +45,7 @@ namespace Movie_Web.Services
         {
             var JsonMovie = JsonConvert.SerializeObject(updateModel);
             StringContent stringContent = new StringContent(JsonMovie, Encoding.UTF8, "application/json");
-            
+
             using (var response = await _httpClient.PutAsync(Uri, stringContent))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
@@ -80,12 +77,12 @@ namespace Movie_Web.Services
             {
                 var apiResponse = JsonObject.Parse(response.Content.ReadAsStringAsync().Result);
                 return apiResponse;
-            } 
+            }
         }
         public Task<PagingModel> GetPagingFromMovieApiAsync(JsonNode apiResponse)
         {
             return Task.FromResult(JsonConvert.DeserializeObject<PagingModel>(apiResponse.ToString()));
         }
-       
+
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Movie_Web.Models.ApiResponse
+﻿namespace Movie_Web.Models.ApiResponse
 {
     public class RegisterApiResponse : BaseEntity
     {

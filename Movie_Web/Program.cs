@@ -1,20 +1,24 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Server.HttpSys;
-using Movie_Web;
+using EmailService;
+using EmailService.Models;
 using Movie_Web.Mapping;
 using Movie_Web.Models;
-using Movie_Web.Models.ApiResponse;
 using Movie_Web.Services;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 var mappingConfig = new MapperConfiguration(mc =>
 {
- mc.AddProfile(new AutoMapperProfiles());
+    mc.AddProfile(new AutoMapperProfiles());
 });
-IMapper mapper= mappingConfig.CreateMapper();
+IMapper mapper = mappingConfig.CreateMapper();
 
+var emailConfig = builder.Configuration
+        .GetSection("EmailConfiguration")
+        .Get<EmailConfiguration>();
+
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddSession(options =>
@@ -26,8 +30,10 @@ builder.Services.AddSession(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthenticationCore();
 
-builder.Services.AddTransient<IAPIClientService<Movie>,APIClientService<Movie>>();
+builder.Services.AddTransient<IAPIClientService<Movie>, APIClientService<Movie>>();
 builder.Services.AddTransient<IAPIClientService<User>, APIClientService<User>>();
+builder.Services.AddTransient<IAPIClientService<UserEmailVerificationModel>, APIClientService<UserEmailVerificationModel>>();
+builder.Services.AddScoped<MailService>();
 builder.Services.AddSingleton(mapper);
 var app = builder.Build();
 
